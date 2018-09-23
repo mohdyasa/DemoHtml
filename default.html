@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+                .bg-purple {
+                    background-color: #6f42c1;
+                }
+
+                .bg-pink {
+                    background-color: #e83e8c;
+                }
+                /*  .bg-pink:before{
+          content:"\2b";
+          font-family:"Glyphicons Halflings";
+          display:inline-block;
+        }*/
+    </style>
+
+
+</head>
+<body>
+    <section>
+        <br/><br />
+        <div class="container">
+            <div class="row mb-3" id="card">
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <h3 class="display-5">83</h3>
+                            <h6 class="text-uppercase">Registered Users</h6>
+                            <p>This is about users</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-purple h-100">
+                        <div class="card-body">
+                            <h3 class="display-5">83</h3>
+                            <h6 class="text-uppercase">Registered Users</h6>
+                            <p>This is about users</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-pink h-100">
+                        <div class="card-body">
+                            <h3 class="display-5">83</h3>
+                            <h6 class="text-uppercase">Registered Users</h6>
+                            <p>This is about users</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 py-2">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+
+                            <h3 class="display-5">83</h3>
+                            <h6 class="text-uppercase">Registered Users</h6>
+                            <p>This is about users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br/><br /><br />
+    <section id="team" class="pb-5">
+        <div class="container">
+            <h3 class="page-heading" style="text-align:center">Bootstrap 4 User Card</h3>
+            <br />
+            <div class="row" id="tblUsers">
+
+            </div>
+            <center> <div id="idLoader"><img src="https://res.cloudinary.com/yasasoft/image/upload/v1537685987/Spin-1s-200px.gif" /></div></center>
+        </div>
+    </section>
+    <script type="text/javascript">
+        var count = 0;
+        $(function () {
+            bindData(BindComplete);
+        });
+        function bindData(callback) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://reqres.in/api/users',
+                dataType: 'JSON',
+                success: function (data) {
+                    $('#idLoader').show();
+                    $.each(data.data, function (index, val) {
+                        $('#tblUsers').append('<div class="col-xs-12 col-sm-6 col-md-4"><div class= "image" ><div class="frontside"><div class="card"><div class="card-body text-center"><p><img class="rounded-circle" src="' + val.avatar + '" alt="card image"></p><h4 class="card-title">' + val.first_name + ' ' + val.last_name + '</h4> <p class="card-text">Web Designer</p><a href="#" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Follow</a></div></div></div></div></div>');
+                        count++;
+                    });
+                    callback();
+                },
+                error: function () {
+                    alert('unable to load data');
+                }
+            })
+        }
+        function BindComplete() {
+            $('#idLoader').hide();
+            $(".card h3").html(count);
+
+        }
+    </script>
+
+</body>
+</html>

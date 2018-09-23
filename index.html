@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .paginate_button a {
+            border-radius: 15px;
+        }
+
+        i {
+            cursor: pointer;
+        }
+        .table-responsive {
+            display: table;
+        }
+    </style>
+
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center"><h2 class="page-header">Employee <b>Details</b></h2></div><nr/><br />
+            <div class="col-sm-12">
+                <br/><br/>
+                <table id="example" class="table table-striped table-bordered dataTable" style="width: 100%;" role="grid" aria-describedby="example_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 94px;">#</th>
+                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 157px;">ID</th>
+                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 67px;">Name</th>
+                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 67px;">Salary</th>
+                            <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 26px;">Age</th>
+                            <th>Profile Image</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tblUser"></tbody>
+
+                </table>
+                <center> <div id="idLoader"><img src="https://res.cloudinary.com/yasasoft/image/upload/v1537685987/Spin-1s-200px.gif" /></div></center>
+            </div>
+        </div></div>
+    <
+
+</body>
+</html>
+<script>
+    $(function () {
+        bindTable(BindComplete);
+    });
+
+    function bindTable(callback) {
+        $.ajax({
+            type: 'GET',
+            url: 'http://dummy.restapiexample.com/api/v1/employees',
+            dataType: 'JSON',
+            success: function (data) {
+                $('#idLoader').show();
+                $.each(data, function (key, value) {
+                    // console.log(value);
+                    $('#tblUser').append('<tr><td>' + (parseInt(key) + 1) + '</td><td>' + value.id + '</td><td>' + value.employee_name + '</td><td>' + value.employee_salary + '</td><td>' + value.employee_age + '</td><td>' + bindImage(value.profile_image) + '</td><td> <i class="material-icons text-info">remove_red_eye</i> <i class="material-icons button edit text-warning">edit</i> <i class="material-icons button delete text-danger">delete</i> </td> </tr >');
+                });
+                callback();
+            },
+            error: function () {
+                alert('unable to load data');
+            }
+        })
+    }
+
+    function BindComplete() {
+        $('#idLoader').hide();
+        
+        $('#example').dataTable();
+    }
+    function bindImage(profile_image) {
+        if (profile_image == "" || profile_image == null)
+            return "Not Available";
+        else {
+            return profile_image;
+        }
+    }
+</script>
